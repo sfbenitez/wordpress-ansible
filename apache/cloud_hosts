@@ -1,0 +1,2 @@
+[cloud]
+172.22.200.207 ansible_ssh_user=debian
