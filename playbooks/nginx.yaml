@@ -1,0 +1,8 @@
+---
+- hosts: node2
+  become: yes
+  tasks:
+    - name: install nginx if needed
+      apt:
+        name: nginx
+        update_cache: yes

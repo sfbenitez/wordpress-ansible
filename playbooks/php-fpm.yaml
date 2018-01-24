@@ -1,0 +1,8 @@
+---
+- hosts: node2
+  become: yes
+  tasks:
+    - name: install php-fpm if needed
+      apt:
+        name: php7.0-fpm
+        

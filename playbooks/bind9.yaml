@@ -1,0 +1,15 @@
+---
+- hosts: node1
+  become: yes
+  tasks:
+    - name: install binf9 if needed
+      apt:
+        name: bind9
+        update_cache: yes
+    - name: config zone example.com
+      vars:
+        domain: "example.com"
+        nodes: "{{groups['all']}}"
+      template:
+        src: file/var/cache/bind/db.example.com
+        dest: /var/cache/bind/db.{{domain}}
