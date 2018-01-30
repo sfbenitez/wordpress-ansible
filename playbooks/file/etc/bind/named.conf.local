@@ -1,6 +1,6 @@
-zone "example.com" {
+zone "{{domain}}" {
         type master;
-        file "db.example.com";
+        file "db.{{domain}}";
 };
 
 zone "5.10.10.in-addr.arpa" {

@@ -1,6 +1,6 @@
 $ORIGIN {{domain}}.
 $TTL    86400
-@       IN      SOA     node1.{{domain}}. root@node1.{{domain}}
+@       IN      SOA     node1.{{domain}}. root@node1.{{domain}} (
                               1         ; serial
                           21600         ; Refresh (6 hours)
                            3600         ; Retry (1 hour)
@@ -9,7 +9,7 @@ $TTL    86400
 
                 MX  10  node1.{{domain}}.
                 NS      node1.{{domain}}.
-{% for host in nodes %}
-{{hostvars[host].inventory_hostname}}  IN      A       {{hostvars[host].ansible_default_ipv4}}
-{% endfor %}
-wordpress IN   CNAME   node1
+node1     IN A 10.10.5.2
+node2     IN A 10.10.5.3
+
+wordpress IN   CNAME   node2

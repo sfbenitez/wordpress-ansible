@@ -1,15 +1,22 @@
 ---
 - hosts: node1
   become: yes
+  vars:
+    domain: "example.com"
   tasks:
-    - name: install binf9 if needed
+    - name: Install binf9 if needed
       apt:
         name: bind9
         update_cache: yes
-    # - name: config zone example.com
-    #   vars:
-    #     domain: "example.com"
-    #     nodes: "{{groups['all']}}"
-    #   template:
-    #     src: file/var/cache/bind/db.example.com
-    #     dest: /var/cache/bind/db.{{domain}}
+    - name: Adding conf file for {{domain}} zone
+      template:
+        src: file/etc/bind/named.conf.local
+        dest: /etc/bind/named.conf.local
+    - name: Configuring zone {{domain}}
+      template:
+        src: file/var/cache/bind/db.example.com
+        dest: /var/cache/bind/db.{{domain}}
+    - name: Restarting bind9
+      service:
+        name: bind9
+        state: restarted
