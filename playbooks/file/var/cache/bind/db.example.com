@@ -9,7 +9,7 @@ $TTL    86400
 
                 MX  10  node1.{{domain}}.
                 NS      node1.{{domain}}.
-node1     IN A 10.10.5.2
-node2     IN A 10.10.5.3
-
-wordpress IN   CNAME   node2
+{% for i in groups['hosts'] %}
+{{ hostvars[i]['inventory_hostname'] }}     IN A {{ hostvars[i]['ansible_ssh_host'] }}
+{% endfor %}
+wordpress IN   CNAME   {{wordpress_cname}}

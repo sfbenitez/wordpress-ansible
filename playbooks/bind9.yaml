@@ -1,8 +1,8 @@
 ---
 - hosts: node1
   become: yes
-  vars:
-    domain: "example.com"
+  vars_files:
+    - wordpress_vars.yml
   tasks:
     - name: Install binf9 if needed
       apt:
