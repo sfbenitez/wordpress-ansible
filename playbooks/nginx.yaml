@@ -1,8 +1,26 @@
 ---
 - hosts: node2
   become: yes
+  vars_files:
+    - wordpress_vars.yml
   tasks:
-    - name: install nginx if needed
+    - name: Install Nginx if needed
       apt:
-        name: nginx
-        update_cache: yes
+        name: 'nginx'
+        update_cache: 'yes'
+    - name: Configuring wordpress virtualhost
+      template:
+        src: 'file/etc/nginx/sites-available/default'
+        dest: '/etc/nginx/sites-available/default'
+    - name: Installing Wordpress
+      copy:
+        src: 'file/var/www/wordpress'
+        dest: '/var/www'
+        owner: 'www-data'
+        group: 'www-data'
+    - name: Configuring Wordpress
+      template:
+        src: 'file/var/www/wordpress/wp-config.php'
+        dest: '/var/www/wordpress/wp-config.php'
+        owner: 'www-data'
+        group: 'www-data'
