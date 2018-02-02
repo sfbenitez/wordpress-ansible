@@ -1,0 +1,43 @@
+---
+- hosts: node2
+  become: yes
+  vars_files:
+    - ../vars/main.yml
+  tasks:
+    - name: Install Nginx if needed
+      apt:
+        name: 'nginx'
+        update_cache: 'yes'
+
+    - name: Configuring wordpress virtualhost
+      template:
+        src: 'file/etc/nginx/sites-available/default'
+        dest: '/etc/nginx/sites-available/default'
+      notify:
+        - restart nginx
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+
+---
+- hosts: node2
+  become: yes
+  tasks:
+    - name: install php-fpm if needed
+      apt:
+        name: php7.0-fpm
+      notify:
+        - restart php-fpm
+
+    - name: install PhP MySQL library
+      apt:
+        name: php7.0-mysql
+
+  handlers:
+    - name: restart php-fpm
+      service:
+        name: php7.0-fpm
+        state: restarted

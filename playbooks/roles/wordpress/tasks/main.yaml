@@ -1,0 +1,56 @@
+---
+- hosts: node1
+  become: yes
+  vars_files:
+    - ../vars/main.yml
+  tasks:
+
+    - name: Create Wordpress database
+      mysql_db:
+        name: '{{wordpress_db}}'
+        state: 'present'
+
+    - name: Copy script sql
+      copy:
+        src: '../files/wordpress.sql'
+        dest: '/tmp/wordpress.sql'
+
+    - name: Creating wordpress tables
+      mysql_db:
+        name: '{{wordpress_db}}'
+        state: 'import'
+        target: '/tmp/wordpress.sql'
+
+    - name: Create Wordpress database user
+      mysql_user:
+        name: '{{wordpress_db_user}}'
+        password: '{{wordpress_db_password}}'
+        host: '%'
+        priv: '{{wordpress_db}}.*:ALL'
+        state: 'present'
+      notify:
+        - restart mysql
+
+    - name: Configuring wordpress site
+      shell: mysql -u '{{wordpress_db_user}}' --password='{{wordpress_db_password}}' -D '{{wordpress_db}}' -e "update wp_options set option_value = '{{wordpress_site_title}}' where option_name = 'blogname';"
+
+---
+- hosts: node2
+  become: yes
+  vars_files:
+    - ../vars/main.yml
+  tasks:
+
+    - name: Copying Wordpress files
+      unarchive:
+        src: '../files/wordpress.tar.gz'
+        dest: '/var/www'
+        owner: 'www-data'
+        group: 'www-data'
+
+    - name: Configuring Wordpress config.php
+      template:
+        src: 'file/var/www/wordpress/wp-config.php'
+        dest: '/var/www/wordpress/wp-config.php'
+        owner: 'www-data'
+        group: 'www-data'

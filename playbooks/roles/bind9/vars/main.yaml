@@ -1,0 +1,4 @@
+---
+# DNS config
+domain: "example.com"
+wordpress_dns_cname: "node2"

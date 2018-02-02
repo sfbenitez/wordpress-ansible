@@ -1,3 +1,9 @@
-- import_playbook: bind9.yaml
-- import_playbook: mariadb.yaml
-- import_playbook: commons.yaml
+# - import_playbook: roles/mysql/tasks/main.yaml
+# - import_playbook: roles/mysql/tasks/main.yaml
+# # - import_playbook: roles/commons.yaml
+---
+- hosts: node1
+  roles:
+    - bind9
+    - mysql
+    - wordpress

@@ -1,0 +1,3 @@
+---
+# Nginx config
+wordpress_servername: "wordpress.{{domain}}"
