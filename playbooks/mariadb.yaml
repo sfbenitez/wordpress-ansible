@@ -10,8 +10,8 @@
 
     - name: Config remote access Mariadb
       copy:
-        src: file/etc/mysql/mariadb.conf.d/50-server.cnf
-        dest: /etc/mysql/mariadb.conf.d/50-server.cnf
+        src: 'file/etc/mysql/mariadb.conf.d/50-server.cnf'
+        dest: '/etc/mysql/mariadb.conf.d/50-server.cnf'
       notify:
         - restart mysql
 
@@ -24,17 +24,29 @@
         name: '{{wordpress_db}}'
         state: 'present'
 
+    - name: Copy script sql
+      copy:
+        src: 'file/wordpress.sql'
+        dest: '/tmp/wordpress.sql'
+
+    - name: Creating wordpress tables
+      mysql_db:
+        name: '{{wordpress_db}}'
+        state: 'import'
+        target: '/tmp/wordpress.sql'
+
     - name: Create Wordpress database user
       mysql_user:
         name: '{{wordpress_db_user}}'
         password: '{{wordpress_db_password}}'
-        host: '{{wordpress_db_remote_host}}'
+        host: '%'
         priv: '{{wordpress_db}}.*:ALL'
         state: 'present'
       notify:
         - restart mysql
 
-# mysql -u wordpress_user -p -h 10.10.6.2 -D wordpress -e "update wp_options set option_value = 'Hola' where option_name = 'blogname';
+    - name: Configuring wordpress site
+      shell: mysql -u '{{wordpress_db_user}}' --password='{{wordpress_db_password}}' -D '{{wordpress_db}}' -e "update wp_options set option_value = '{{wordpress_site_title}}' where option_name = 'blogname';"
 
   handlers:
     - name: restart mysql
