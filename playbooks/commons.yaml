@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Config resolv
+      copy:
+        src: file/etc/resolv.conf
+        dest: /etc/resolv.conf

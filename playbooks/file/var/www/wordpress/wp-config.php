@@ -25,7 +25,7 @@ define('DB_USER', '{{wordpress_db_user}}');
 define('DB_PASSWORD', '{{wordpress_db_password}}');
 
 /** Host de MySQL (es muy probable que no necesites cambiarlo) */
-define('DB_HOST', '{{wordpress_db_host}}');
+define('DB_HOST', '{{wordpress_db_remote_host}}');
 
 /** Codificación de caracteres para la base de datos. */
 define('DB_CHARSET', 'utf8');

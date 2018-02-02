@@ -12,4 +12,4 @@ $TTL    86400
 {% for i in groups['hosts'] %}
 {{ hostvars[i]['inventory_hostname'] }}     IN A {{ hostvars[i]['ansible_ssh_host'] }}
 {% endfor %}
-wordpress IN   CNAME   {{wordpress_cname}}
+wordpress IN   CNAME   {{wordpress_dns_cname}}

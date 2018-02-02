@@ -6,7 +6,7 @@
       apt:
         name: php7.0-fpm
       notify:
-        - restart nginx
+        - restart php-fpm
 
     - name: install PhP MySQL library
       apt:

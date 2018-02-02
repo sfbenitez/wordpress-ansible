@@ -4,18 +4,26 @@
   vars_files:
     - wordpress_vars.yml
   tasks:
-    - name: Install binf9 if needed
+    - name: Install bind9 if needed
       apt:
         name: bind9
         update_cache: yes
+
     - name: Adding conf file for {{domain}} zone
       template:
         src: file/etc/bind/named.conf.local
         dest: /etc/bind/named.conf.local
-    - name: Configuring zone {{domain}}
+
+    - name: Configuring direct zone {{domain}}
       template:
         src: file/var/cache/bind/db.example.com
         dest: /var/cache/bind/db.{{domain}}
+
+    - name: Configuring inverse zone {{domain}}
+      template:
+        src: file/var/cache/bind/db.10.10.5
+        dest: /var/cache/bind/db.10.10.6
+
     - name: Restarting bind9
       service:
         name: bind9

@@ -1,9 +1,20 @@
 ---
+# DNS config
 domain: "example.com"
-mysql_server: "node1"
-wordpress_cname: "node2"
+wordpress_dns_cname: "node2"
+
+# Nginx config
 wordpress_servername: "wordpress.{{domain}}"
+
+# MySQL config
+mysql_server: "node1"
 wordpress_db: "wordpress"
 wordpress_db_user: "wordpress_user"
 wordpress_db_password: "usuario"
 wordpress_db_remote_host: "10.10.6.3"
+
+# Wordpress config
+wordpress_site_title: "Blog de Ferrete"
+wordpress_site_admin_user: "ferrete"
+wordpress_site_admin_password: "usuario"
+wordpress_site_admin_email: "sergioferretebenitez@gmail.com"
