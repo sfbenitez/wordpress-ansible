@@ -8,19 +8,30 @@
       apt:
         name: 'nginx'
         update_cache: 'yes'
+
     - name: Configuring wordpress virtualhost
       template:
         src: 'file/etc/nginx/sites-available/default'
         dest: '/etc/nginx/sites-available/default'
+      notify:
+        - restart nginx
+
     - name: Installing Wordpress
-      copy:
-        src: 'file/var/www/wordpress'
+      unarchive:
+        src: 'file/wordpress.tar.gz'
         dest: '/var/www'
         owner: 'www-data'
         group: 'www-data'
+
     - name: Configuring Wordpress
       template:
         src: 'file/var/www/wordpress/wp-config.php'
         dest: '/var/www/wordpress/wp-config.php'
         owner: 'www-data'
         group: 'www-data'
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted

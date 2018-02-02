@@ -1,2 +1,4 @@
 venv/*
+.vagrant
 .vagrant/*
+playbooks/*.retry

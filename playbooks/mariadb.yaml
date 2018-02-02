@@ -1,7 +1,43 @@
 ---
 - hosts: node1
   become: yes
+  vars_files:
+    - wordpress_vars.yml
   tasks:
     - name: install Mariadb server if needed
       apt:
-        name: mariadb-server
+        name: 'mariadb-server'
+
+    - name: Config remote access Mariadb
+      copy:
+        src: file/etc/mysql/mariadb.conf.d/50-server.cnf
+        dest: /etc/mysql/mariadb.conf.d/50-server.cnf
+      notify:
+        - restart mysql
+
+    - name: Install Python mysql library
+      apt:
+        name: 'python-mysqldb'
+
+    - name: Create Wordpress database
+      mysql_db:
+        name: '{{wordpress_db}}'
+        state: 'present'
+
+    - name: Create Wordpress database user
+      mysql_user:
+        name: '{{wordpress_db_user}}'
+        password: '{{wordpress_db_password}}'
+        host: '{{wordpress_db_remote_host}}'
+        priv: '{{wordpress_db}}.*:ALL'
+        state: 'present'
+      notify:
+        - restart mysql
+
+# mysql -u wordpress_user -p -h 10.10.6.2 -D wordpress -e "update wp_options set option_value = 'Hola' where option_name = 'blogname';
+
+  handlers:
+    - name: restart mysql
+      service:
+        name: mysql
+        state: restarted
