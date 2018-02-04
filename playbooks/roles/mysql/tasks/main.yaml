@@ -1,26 +1,15 @@
 ---
-- hosts: node1
-  become: yes
-  vars_files:
-    - ../vars/main.yml
-  tasks:
-    - name: install Mariadb server if needed
-      apt:
-        name: 'mariadb-server'
+- name: install Mariadb server if needed
+  apt:
+    name: 'mariadb-server'
 
-    - name: Config remote access Mariadb
-      copy:
-        src: 'file/etc/mysql/mariadb.conf.d/50-server.cnf'
-        dest: '/etc/mysql/mariadb.conf.d/50-server.cnf'
-      notify:
-        - restart mysql
+- name: Config remote access Mariadb
+  copy:
+    src: 'templates/etc/mysql/mariadb.conf.d/50-server.cnf'
+    dest: '/etc/mysql/mariadb.conf.d/50-server.cnf'
+  notify:
+    - restart mysql
 
-    - name: Install Python mysql library
-      apt:
-        name: 'python-mysqldb'
-
-  handlers:
-    - name: restart mysql
-      service:
-        name: mysql
-        state: restarted
+- name: Install Python mysql library
+  apt:
+    name: 'python-mysqldb'

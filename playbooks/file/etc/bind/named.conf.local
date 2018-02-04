@@ -1,9 +1,0 @@
-zone "{{domain}}" {
-        type master;
-        file "db.{{domain}}";
-};
-
-zone "{{ ansible_eth1["ipv4"]["address"].split('.')[2] }}.{{ ansible_eth1["ipv4"]["address"].split('.')[1] }}.{{ ansible_eth1["ipv4"]["address"].split('.')[0] }}.in-addr.arpa" {
-        type master;
-        file "db.{{ ansible_eth1["ipv4"]["address"].split('.')[0] }}.{{ ansible_eth1["ipv4"]["address"].split('.')[1] }}.{{ ansible_eth1["ipv4"]["address"].split('.')[2] }}";
-};

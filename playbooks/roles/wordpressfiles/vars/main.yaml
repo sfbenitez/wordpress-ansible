@@ -1,0 +1,7 @@
+---
+# Wordpress config
+wordpress_site_url: "wordpress.{{domain}}"
+wordpress_site_title: "Blog de Ferrete"
+wordpress_site_admin_user: "usuario"
+wordpress_site_admin_password: "asdasd123"
+wordpress_site_admin_email: "usuario@example.com"

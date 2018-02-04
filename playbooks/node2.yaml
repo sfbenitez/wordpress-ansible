@@ -2,4 +2,4 @@
 - hosts: node2
   roles:
     - webserver
-    - wordpress
+    - wordpressfiles

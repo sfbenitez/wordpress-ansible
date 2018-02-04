@@ -1,0 +1,27 @@
+- name: Copying Wordpress files
+  unarchive:
+    src: 'files/wordpress.tar.gz'
+    dest: '/var/www'
+    owner: 'www-data'
+    group: 'www-data'
+
+- name: Configuring Wordpress config.php
+  template:
+    src: 'templates/var/www/wordpress/wp-config.php'
+    dest: '/var/www/wordpress/wp-config.php'
+    owner: 'www-data'
+    group: 'www-data'
+
+- name: Downloading WP-CLI for create db tables
+  get_url:
+    url: 'https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar'
+    dest: '/tmp/wp'
+    mode: 0500
+
+- name: Creating Wordpress db tables
+  shell: '/tmp/wp core install --url="{{wordpress_site_url}}" \
+        --title="{{wordpress_site_title}}" \
+        --admin_user="{{wordpress_site_admin_user}}" \
+        --admin_password="{{wordpress_site_admin_password}}" \
+        --admin_email="{{wordpress_site_admin_email}}" \
+        --allow-root --path="/var/www/wordpress"'

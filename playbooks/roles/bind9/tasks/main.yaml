@@ -1,30 +1,31 @@
 ---
-- hosts: node1
-  become: yes
-  vars_files:
-    - ../vars/main.yml
-  tasks:
-    - name: Install bind9 if needed
-      apt:
-        name: bind9
-        update_cache: yes
+# - hosts: node1
+# - become: yes
+# - vars_files:
+#     - main.yml
+# - tasks:
+- name: Install bind9 if needed
+  apt:
+    name: bind9
+    update_cache: yes
 
-    - name: Adding conf file for {{domain}} zone
-      template:
-        src: file/etc/bind/named.conf.local
-        dest: /etc/bind/named.conf.local
+- name: Adding conf file for {{domain}} zone
+  template:
+    src: 'templates/etc/bind/named.conf.local'
+    dest: '/etc/bind/named.conf.local'
+  notify:
+    - restart bind9
 
-    - name: Configuring direct zone {{domain}}
-      template:
-        src: file/var/cache/bind/db.example.com
-        dest: /var/cache/bind/db.{{domain}}
+- name: Configuring direct zone {{domain}}
+  template:
+    src: 'templates/var/cache/bind/db.example.com'
+    dest: '/var/cache/bind/db.{{domain}}'
+  notify:
+    - restart bind9
 
-    - name: Configuring inverse zone {{domain}}
-      template:
-        src: file/var/cache/bind/db.10.10.5
-        dest: /var/cache/bind/db.10.10.6
-
-    - name: Restarting bind9
-      service:
-        name: bind9
-        state: restarted
+- name: Configuring inverse zone {{domain}}
+  template:
+    src: 'templates/var/cache/bind/db.10.10.5'
+    dest: '/var/cache/bind/db.10.10.6'
+  notify:
+    - restart bind9
