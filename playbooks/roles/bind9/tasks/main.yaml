@@ -26,6 +26,6 @@
 - name: Configuring inverse zone {{domain}}
   template:
     src: 'templates/var/cache/bind/db.10.10.5'
-    dest: '/var/cache/bind/db.10.10.6'
+    dest: "/var/cache/bind/db.{{ hostvars['node1']['ansible_ssh_host'].split('.')[0] }}.{{ hostvars['node1']['ansible_ssh_host'].split('.')[1] }}.{{ hostvars['node1']['ansible_ssh_host'].split('.')[2] }}"
   notify:
     - restart bind9

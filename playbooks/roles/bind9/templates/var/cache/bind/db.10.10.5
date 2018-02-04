@@ -1,4 +1,4 @@
-$ORIGIN {{ ansible_eth1["ipv4"]["address"].split('.')[2] }}.{{ ansible_eth1["ipv4"]["address"].split('.')[1] }}.{{ ansible_eth1["ipv4"]["address"].split('.')[0] }}.in-addr.arpa.
+$ORIGIN {{ hostvars['node1']['ansible_ssh_host'].split('.')[2] }}.{{ hostvars['node1']['ansible_ssh_host'].split('.')[1] }}.{{ hostvars['node1']['ansible_ssh_host'].split('.')[0] }}.in-addr.arpa.
 $TTL    86400
 @       IN      SOA     node1.{{domain}}. root@node1.{{domain}} (
                               1         ; serial
