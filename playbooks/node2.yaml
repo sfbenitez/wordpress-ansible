@@ -1,5 +1,5 @@
 ---
-- hosts: node2
+- hosts: 34.245.44.2
   roles:
     - webserver
     - wordpressfiles
