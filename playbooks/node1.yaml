@@ -4,3 +4,5 @@
     - bind9
     - mysql
     - wordpressdb
+    - webserver
+    - wordpressfiles
