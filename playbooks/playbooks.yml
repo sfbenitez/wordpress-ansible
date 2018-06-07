@@ -1,0 +1,11 @@
+---
+- hosts: node1
+  roles:
+    - bind9
+    - mysql
+    - wordpressdb
+
+- hosts: node2
+  roles:
+    - webserver
+    - wordpressfiles
