@@ -1,7 +1,8 @@
 ---
 - hosts: node1
   roles:
-    - bind9
+    - ec2
+      #    - bind9
       #    - mysql
       #- wordpressdb
 
