@@ -3,7 +3,7 @@ zone "{{domain}}" {
         file "db.{{domain}}";
 };
 
-zone "{{ hostvars['node1']['ansible_ssh_host'].split('.')[2] }}.{{ hostvars['node1']['ansible_ssh_host'].split('.')[1] }}.{{ hostvars['node1']['ansible_ssh_host'].split('.')[0] }}.in-addr.arpa" {
+zone "{{ hostvars['34.243.56.110']['ansible_ssh_host'].split('.')[2] }}.{{ hostvars['34.243.56.110']['ansible_ssh_host'].split('.')[1] }}.{{ hostvars['34.243.56.110']['ansible_ssh_host'].split('.')[0] }}.in-addr.arpa" {
         type master;
-        file "db.{{ hostvars['node1']['ansible_ssh_host'].split('.')[0] }}.{{ hostvars['node1']['ansible_ssh_host'].split('.')[1] }}.{{ hostvars['node1']['ansible_ssh_host'].split('.')[2] }}";
+        file "db.{{ hostvars['34.243.56.110']['ansible_ssh_host'].split('.')[0] }}.{{ hostvars['34.243.56.110']['ansible_ssh_host'].split('.')[1] }}.{{ hostvars['34.243.56.110']['ansible_ssh_host'].split('.')[2] }}";
 };
