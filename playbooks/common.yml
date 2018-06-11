@@ -1,0 +1,6 @@
+---
+  tasks:
+    - name: "Apt Update"
+      apt:
+      name: git
+      update_cache: yes
